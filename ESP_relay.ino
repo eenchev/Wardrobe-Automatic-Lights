@@ -18,8 +18,8 @@ bool doorStatusCombined = false;
 
 void setup ()
 {
-  pinMode(PIN_DOOR_LEFT, INPUT);
-  pinMode(PIN_DOOR_RIGHT, INPUT);
+  pinMode(PIN_DOOR_LEFT, INPUT_PULLUP);
+  pinMode(PIN_DOOR_RIGHT, INPUT_PULLUP);
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_RELAY, OUTPUT);
   digitalWrite(PIN_LED, LOW); 
@@ -29,8 +29,8 @@ void loop ()
 {
   doorStatusLeft = (digitalRead(PIN_DOOR_LEFT) == HIGH);
   doorStatusRight = (digitalRead(PIN_DOOR_RIGHT) == HIGH);
-  doorStatusCombined = doorStatusLeft || doorStatusRight;
-  if (doorStatusCombined) {
+  doorStatusCombined = doorStatusLeft && doorStatusRight;
+  if (!doorStatusCombined) {
     digitalWrite(PIN_LED, HIGH);
     digitalWrite(PIN_RELAY, HIGH);
   } else {
